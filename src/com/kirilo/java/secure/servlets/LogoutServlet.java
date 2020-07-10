@@ -13,8 +13,12 @@ public class LogoutServlet extends BaseServlet{
         final HttpSession session = req.getSession(false);
         if (session == null) {
             out.println("<h3>You have not login!</h3>");
+            return false;
         } else {
             session.invalidate();
+/*            session.removeAttribute("username");
+            session.removeAttribute("role");*/
+//            session.setMaxInactiveInterval(1);
             out.println("<p>Bye!</p>");
             out.println("<p><a href='index.html'>Login</a></p>");
         }
@@ -33,6 +37,6 @@ public class LogoutServlet extends BaseServlet{
 
     @Override
     protected boolean validation(HttpServletRequest req, PrintWriter out) {
-        return false;
+        return true;
     }
 }
