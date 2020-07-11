@@ -11,12 +11,11 @@ import java.util.List;
 
 public class LoginServlet extends BaseServlet {
 
-    private String userName;
-    private String password;
-
     @Override
     protected boolean createDynamicPageBody(PrintWriter out, Statement statement, HttpServletRequest req) throws SQLException {
         // Verify the username/password and retrieve the role(s)
+        String userName = req.getParameter("username");
+        String password = req.getParameter("password");
         StringBuilder sqlStr = new StringBuilder()
                 .append("SELECT role FROM users, user_roles WHERE ")
                 .append("STRCMP(users.username, '")
@@ -71,10 +70,12 @@ public class LoginServlet extends BaseServlet {
     @Override
     protected boolean validation(HttpServletRequest req, PrintWriter out) {
         // Retrieve and process request parameters: username and password
-        userName = req.getParameter("username");
-        password = req.getParameter("password");
+        String userName = req.getParameter("username");
+        String password = req.getParameter("password");
         boolean hasUserName = userName != null && ((userName = userName.trim()).length() > 0);
         boolean hasPassword = password != null && ((password = password.trim()).length() > 0);
+        req.setAttribute("username", userName);
+        req.setAttribute("password", password);
         // Validate input request parameters
         if (!hasUserName) {
             out.println("<h3>Please Enter Your username!</h3>");
