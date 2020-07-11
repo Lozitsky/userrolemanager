@@ -78,9 +78,11 @@ public class LoginServlet extends BaseServlet {
         // Validate input request parameters
         if (!hasUserName) {
             out.println("<h3>Please Enter Your username!</h3>");
+            out.println("<p><a href='index.html'>Login</a></p>");
             return false;
         } else if (!hasPassword) {
             out.println("<h3>Please Enter Your password!</h3>");
+            out.println("<p><a href='index.html'>Login</a></p>");
             return false;
         }
         return true;

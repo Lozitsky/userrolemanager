@@ -9,10 +9,9 @@ import java.util.List;
 
 public class DoSomethingServlet extends BaseServlet {
 
-    private HttpSession session;
-
     @Override
     protected boolean createDynamicPageBody(PrintWriter out, Statement statement, HttpServletRequest req) throws SQLException {
+        HttpSession session = req.getSession(false);
         List<String> roles;
         String userName;
         synchronized (session.getId()) {
@@ -50,7 +49,7 @@ public class DoSomethingServlet extends BaseServlet {
 
     @Override
     protected boolean validation(HttpServletRequest req, PrintWriter out) {
-        session = req.getSession(false);
+        HttpSession session = req.getSession(false);
         if (session == null) {
             out.println("<h3>You have not login!</h3>");
             return false;
